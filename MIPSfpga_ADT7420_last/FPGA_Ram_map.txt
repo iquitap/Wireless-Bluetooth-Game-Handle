@@ -1,0 +1,215 @@
+
+Discarded input sections
+
+ .reginfo       0x0000000000000000       0x18 main.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 main.o
+ .reginfo       0x0000000000000000       0x18 ADXL362.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 ADXL362.o
+ .reginfo       0x0000000000000000       0x18 spi.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 spi.o
+ .reginfo       0x0000000000000000       0x18 boot.o
+ .MIPS.abiflags
+                0x0000000000000000       0x18 boot.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD main.o
+LOAD ADXL362.o
+LOAD spi.o
+
+.text_init      0x00000000bfc00000      0x770
+                0x00000000bfc00000                _ftext_init = ABSOLUTE (.)
+ boot.o(.text)
+ .text          0x00000000bfc00000      0x770 boot.o
+                0x00000000bfc00000                __reset_vector
+                0x00000000bfc00014                __cpu_init
+                0x00000000bfc00060                init_icache
+                0x00000000bfc000b8                init_dcache
+                0x00000000bfc00118                change_k0_cca
+                0x00000000bfc00308                init_tlb
+                0x00000000bfc0049c                init_cp0
+                0x00000000bfc00508                _start
+                0x00000000bfc005c8                __exception_entry
+                0x00000000bfc00770                . = ALIGN (0x8)
+                0x00000000bfc00770                _etext_init = ABSOLUTE (.)
+
+.text_ram       0x0000000080001000     0x1a68
+                0x0000000080001000                _ftext_ram = ABSOLUTE (.)
+ *(.text)
+ .text          0x0000000080001000      0x6c8 main.o
+                0x0000000080001000                new_reverse
+                0x0000000080001060                new_my_itoa
+                0x000000008000112c                delay
+                0x0000000080001168                uart_outbyte
+                0x00000000800011b0                uart_inbyte
+                0x00000000800011d0                uart_print
+                0x0000000080001230                xilinx_intc_init
+                0x00000000800012c4                intc_disable_interrupts
+                0x00000000800012d4                intc_enable_interrupts
+                0x00000000800012e8                _mips_handle_irq
+ .text          0x00000000800016c8      0x208 ADXL362.o
+                0x00000000800016c8                reverse
+                0x0000000080001728                my_itoa
+                0x00000000800017d0                ADXL_init
+                0x000000008000183c                get_status
+                0x0000000080001860                set_self_test
+                0x0000000080001884                clr_self_test
+                0x0000000080001890                get_X
+                0x0000000080001898                get_Y
+                0x00000000800018a0                get_Z
+                0x00000000800018a8                get_addr
+ .text          0x00000000800018d0      0xce0 spi.o
+                0x00000000800018d0                _reverse
+                0x0000000080001930                _my_itoa
+                0x00000000800019fc                _uart_outbyte
+                0x0000000080001a10                _uart_print
+                0x0000000080001a5c                new_delay
+                0x0000000080001a98                little_delay
+                0x0000000080001ad4                ADXL_read_oneReg
+                0x0000000080001c54                ADXL_read_oneRegY
+                0x0000000080001dd4                ADXL_wirte_oneReg
+                0x0000000080002530                SPI_init
+                0x0000000080002578                SPI_writeOneReg
+ *(.text.*)
+ .text.startup  0x00000000800025b0      0x430 main.o
+                0x00000000800025b0                main
+ *(.rodata)
+ *(.rodata.*)
+ .rodata.str1.4
+                0x00000000800029e0       0x84 main.o
+ .rodata.str1.4
+                0x0000000080002a64        0x4 spi.o
+                0x0000000080002a68                . = ALIGN (0x8)
+ *fill*         0x0000000080002a64        0x4 00000000
+                0x0000000080002a68                _etext_ram = ABSOLUTE (.)
+
+.data           0x0000000080002a68        0x0
+                0x0000000080002a68                _fdata_ram = ABSOLUTE (.)
+ *(.data)
+ .data          0x0000000080002a68        0x0 main.o
+ .data          0x0000000080002a68        0x0 ADXL362.o
+ .data          0x0000000080002a68        0x0 spi.o
+ .data          0x0000000080002a68        0x0 boot.o
+                0x0000000080002a68                . = ALIGN (0x8)
+                0x000000008000aa68                _gp = ABSOLUTE ((. + 0x8000))
+ *(.lit8)
+ *(.lit4)
+ *(.sdata)
+                0x0000000080002a68                . = ALIGN (0x8)
+                0x0000000080002a68                _edata_ram = ABSOLUTE (.)
+                0x0000000080002a68                _fbss = .
+
+.sbss           0x0000000080002a68        0x4
+ *(.sbss)
+ .sbss          0x0000000080002a68        0x4 main.o
+                0x0000000080002a68                rxData
+ *(.scommon)
+
+.bss            0x0000000080002a6c      0x12c
+ *(.bss)
+ .bss           0x0000000080002a6c       0x64 main.o
+ .bss           0x0000000080002ad0       0x64 ADXL362.o
+ .bss           0x0000000080002b34       0x64 spi.o
+ .bss           0x0000000080002b98        0x0 boot.o
+ *(COMMON)
+                0x0000000080002b98                _end = .
+
+.gptab.sdata
+ *(.gptab.data)
+ *(.gptab.sdata)
+
+.gptab.sbss
+ *(.gptab.bss)
+ *(.gptab.sbss)
+
+/DISCARD/
+ *(.reginfo)
+ *(.MIPS.abiflags)
+                0x0000000080002b98                _freemem = .
+OUTPUT(FPGA_Ram.elf elf32-tradlittlemips)
+
+.pdr            0x0000000000000000      0x520
+ .pdr           0x0000000000000000      0x160 main.o
+ .pdr           0x0000000000000160      0x140 ADXL362.o
+ .pdr           0x00000000000002a0      0x160 spi.o
+ .pdr           0x0000000000000400      0x120 boot.o
+
+.mdebug.abi32   0x0000000000000000        0x0
+ .mdebug.abi32  0x0000000000000000        0x0 main.o
+ .mdebug.abi32  0x0000000000000000        0x0 ADXL362.o
+ .mdebug.abi32  0x0000000000000000        0x0 spi.o
+
+.comment        0x0000000000000000       0x43
+ .comment       0x0000000000000000       0x43 main.o
+                                         0x44 (size before relaxing)
+ .comment       0x0000000000000043       0x44 ADXL362.o
+ .comment       0x0000000000000043       0x44 spi.o
+
+.gnu.attributes
+                0x0000000000000000       0x10
+ .gnu.attributes
+                0x0000000000000000       0x10 main.o
+ .gnu.attributes
+                0x0000000000000010       0x10 ADXL362.o
+ .gnu.attributes
+                0x0000000000000020       0x10 spi.o
+ .gnu.attributes
+                0x0000000000000030       0x10 boot.o
+
+.debug_info     0x0000000000000000     0x1af3
+ .debug_info    0x0000000000000000      0xb32 main.o
+ .debug_info    0x0000000000000b32      0x418 ADXL362.o
+ .debug_info    0x0000000000000f4a      0xb36 spi.o
+ .debug_info    0x0000000000001a80       0x73 boot.o
+
+.debug_abbrev   0x0000000000000000      0x6db
+ .debug_abbrev  0x0000000000000000      0x2d0 main.o
+ .debug_abbrev  0x00000000000002d0      0x1e9 ADXL362.o
+ .debug_abbrev  0x00000000000004b9      0x20e spi.o
+ .debug_abbrev  0x00000000000006c7       0x14 boot.o
+
+.debug_loc      0x0000000000000000     0x1388
+ .debug_loc     0x0000000000000000      0x77b main.o
+ .debug_loc     0x000000000000077b      0x18e ADXL362.o
+ .debug_loc     0x0000000000000909      0xa7f spi.o
+
+.debug_aranges  0x0000000000000000       0x88
+ .debug_aranges
+                0x0000000000000000       0x28 main.o
+ .debug_aranges
+                0x0000000000000028       0x20 ADXL362.o
+ .debug_aranges
+                0x0000000000000048       0x20 spi.o
+ .debug_aranges
+                0x0000000000000068       0x20 boot.o
+
+.debug_ranges   0x0000000000000000      0x2c8
+ .debug_ranges  0x0000000000000000      0x148 main.o
+ .debug_ranges  0x0000000000000148      0x180 spi.o
+
+.debug_line     0x0000000000000000      0x75f
+ .debug_line    0x0000000000000000      0x24f main.o
+ .debug_line    0x000000000000024f       0xa7 ADXL362.o
+ .debug_line    0x00000000000002f6      0x28d spi.o
+ .debug_line    0x0000000000000583      0x1dc boot.o
+
+.debug_str      0x0000000000000000      0x286
+ .debug_str     0x0000000000000000      0x1bc main.o
+                                        0x1e1 (size before relaxing)
+ .debug_str     0x00000000000001bc       0x75 ADXL362.o
+                                        0x179 (size before relaxing)
+ .debug_str     0x0000000000000231       0x55 spi.o
+                                        0x18d (size before relaxing)
+
+.debug_frame    0x0000000000000000      0x2f4
+ .debug_frame   0x0000000000000000       0xfc main.o
+ .debug_frame   0x00000000000000fc       0xe0 ADXL362.o
+ .debug_frame   0x00000000000001dc      0x118 spi.o
